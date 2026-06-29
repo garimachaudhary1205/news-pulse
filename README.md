@@ -4,6 +4,16 @@ Pulls live articles from several news RSS feeds, automatically groups related
 articles into **topic clusters**, and displays those clusters as a visual
 **timeline**. Built for the Xponentium full-stack assessment.
 
+## 🌐 Live demo
+
+| Component | URL |
+|-----------|-----|
+| **Frontend** | https://news-pulse-delta-eight.vercel.app |
+| **Backend API** | https://news-pulse-api-xcvs.onrender.com |
+
+> Both run on free tiers — the backend (Render) may take ~50s to wake on the
+> first request after a period of inactivity (cold start), then is instant.
+
 ![Timeline](docs/timeline.png)
 
 Two visualizations — a Gantt-style **timeline** (above) and a calendar-style
