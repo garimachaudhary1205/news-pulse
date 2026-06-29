@@ -1,0 +1,32 @@
+# Scheduled ingestion: runs the Python pipeline (scrape + cluster) against the
+# shared Neon database on a cron, plus manual trigger. This is the "Python
+# pipeline as a scheduled job" piece of the deployment.
+name: News ingest
+
+on:
+  schedule:
+    - cron: "0 */3 * * *" # every 3 hours
+  workflow_dispatch: {} # allow manual runs from the Actions tab
+
+jobs:
+  ingest:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: scraper
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+          cache-dependency-path: scraper/requirements.txt
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run pipeline
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+        run: python -m src.pipeline

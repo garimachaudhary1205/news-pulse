@@ -1,0 +1,18 @@
+# Render blueprint for the backend API (Node + bundled Python scraper).
+# Database is Neon (external), so it's not declared here — set DATABASE_URL in
+# the Render dashboard or via the env group.
+services:
+  - type: web
+    name: news-pulse-api
+    runtime: docker
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    plan: free
+    healthCheckPath: /health
+    envVars:
+      - key: DATABASE_URL
+        sync: false # set in dashboard (Neon connection string)
+      - key: CORS_ORIGIN
+        sync: false # set to your Vercel frontend URL
+      - key: INGEST_ENABLED
+        value: "true"

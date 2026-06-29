@@ -1,0 +1,9 @@
+**/node_modules
+**/venv
+**/__pycache__
+**/.next
+**/.git
+**/.env
+**/.env.local
+frontend
+*.md
