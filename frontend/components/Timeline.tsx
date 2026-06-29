@@ -72,17 +72,29 @@ export default function Timeline({ items, selectedId, onSelect }: Props) {
           Topic
         </div>
         <div className="relative h-8 flex-1">
-          {ticks.map((t, i) => (
-            <div
-              key={i}
-              className="absolute top-0 flex h-full items-center"
-              style={{ left: `${((t - domStart) / span) * 100}%` }}
-            >
-              <span className="-translate-x-1/2 whitespace-nowrap text-[10px] text-slate-500">
-                {fmtTick(t, spanDays)}
-              </span>
-            </div>
-          ))}
+          {ticks.map((t, i) => {
+            // Keep the first/last labels inside the card: left-align the first,
+            // right-align the last, centre the rest.
+            const align =
+              i === 0
+                ? "translate-x-0"
+                : i === ticks.length - 1
+                  ? "-translate-x-full"
+                  : "-translate-x-1/2";
+            return (
+              <div
+                key={i}
+                className="absolute top-0 flex h-full items-center"
+                style={{ left: `${((t - domStart) / span) * 100}%` }}
+              >
+                <span
+                  className={`${align} whitespace-nowrap text-[10px] text-slate-500`}
+                >
+                  {fmtTick(t, spanDays)}
+                </span>
+              </div>
+            );
+          })}
         </div>
       </div>
 
